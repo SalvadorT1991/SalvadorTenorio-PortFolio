@@ -12,9 +12,6 @@ type UiDictionary = {
   heroSubhead: string;
   ctaPrimary: string;
   ctaSecondary: string;
-  sectionReadyHint: string;
-  experiencePending: string;
-  projectsPending: string;
   footerRights: string;
   footerNav: string;
 };
@@ -34,11 +31,6 @@ export const ui: Record<Locale, UiDictionary> = {
       "Ayudo a equipos y organizaciones a convertir desafíos de negocio complejos en sistemas .NET robustos, mantenibles y listos para producción.",
     ctaPrimary: "Hablemos",
     ctaSecondary: "Ver experiencia",
-    sectionReadyHint: "Sección preparada — contenido en siguientes etapas",
-    experiencePending:
-      "La línea de tiempo profesional se publicará cuando confirmemos fechas y detalles de empleo.",
-    projectsPending:
-      "Los casos de estudio están en borrador y se habilitarán en la siguiente etapa.",
     footerRights: "Todos los derechos reservados.",
     footerNav: "Navegación",
   },
@@ -56,11 +48,6 @@ export const ui: Record<Locale, UiDictionary> = {
       "I help teams and organizations turn complex business challenges into robust, maintainable .NET systems ready for production.",
     ctaPrimary: "Let's talk",
     ctaSecondary: "View experience",
-    sectionReadyHint: "Section scaffolded — content in upcoming stages",
-    experiencePending:
-      "The professional timeline will go live once employment dates and details are confirmed.",
-    projectsPending:
-      "Case studies are drafted and will be enabled in the next stage.",
     footerRights: "All rights reserved.",
     footerNav: "Navigation",
   },

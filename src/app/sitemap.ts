@@ -1,16 +1,18 @@
 import type { MetadataRoute } from "next";
 import { locales } from "@/lib/i18n";
+import { siteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://salvadortenorio.dev";
+  const lastModified = new Date();
+
   return locales.map((locale) => ({
-    url: `${base}/${locale}`,
-    lastModified: "2026-11-16",
+    url: `${siteUrl}/${locale}`,
+    lastModified,
     changeFrequency: "monthly" as const,
     priority: 1,
     alternates: {
       languages: Object.fromEntries(
-        locales.map((l) => [l, `${base}/${l}`]),
+        locales.map((l) => [l, `${siteUrl}/${l}`]),
       ),
     },
   }));

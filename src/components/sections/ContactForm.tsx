@@ -113,7 +113,11 @@ export function ContactForm({ locale }: ContactFormProps) {
     "w-full rounded-xl border border-stroke bg-canvas/50 px-4 py-3 text-sm text-ink placeholder:text-ink-muted/60 outline-none transition-colors focus:border-accent/50 focus:ring-2 focus:ring-accent/30";
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-2xl border border-stroke bg-surface/25 p-5 sm:p-6">
+    <form
+      onSubmit={onSubmit}
+      className="space-y-4 rounded-2xl border border-stroke bg-surface/25 p-5 sm:p-6"
+      noValidate
+    >
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="space-y-1.5 text-sm">
           <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted">
@@ -124,7 +128,10 @@ export function ContactForm({ locale }: ContactFormProps) {
             value={form.name}
             onChange={onChange("name")}
             autoComplete="name"
+            name="name"
             required
+            aria-invalid={Boolean(error && !form.name.trim())}
+            aria-describedby={error ? "contact-form-error" : "contact-form-hint"}
           />
         </label>
         <label className="space-y-1.5 text-sm">
@@ -137,7 +144,10 @@ export function ContactForm({ locale }: ContactFormProps) {
             value={form.email}
             onChange={onChange("email")}
             autoComplete="email"
+            name="email"
             required
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? "contact-form-error" : "contact-form-hint"}
           />
         </label>
       </div>
@@ -151,6 +161,7 @@ export function ContactForm({ locale }: ContactFormProps) {
           value={form.company}
           onChange={onChange("company")}
           autoComplete="organization"
+          name="company"
         />
       </label>
 
@@ -162,14 +173,27 @@ export function ContactForm({ locale }: ContactFormProps) {
           className={cn(fieldClass, "min-h-32 resize-y")}
           value={form.message}
           onChange={onChange("message")}
+          name="message"
           required
+          aria-invalid={Boolean(error && !form.message.trim())}
+          aria-describedby={error ? "contact-form-error" : "contact-form-hint"}
         />
       </label>
 
-      {error ? <p className="text-sm text-red-300">{error}</p> : null}
-      {sentHint ? <p className="text-sm text-accent">{copy.success}</p> : null}
+      {error ? (
+        <p id="contact-form-error" role="alert" className="text-sm text-red-300">
+          {error}
+        </p>
+      ) : null}
+      {sentHint ? (
+        <p role="status" className="text-sm text-accent">
+          {copy.success}
+        </p>
+      ) : null}
 
-      <p className="text-xs leading-relaxed text-ink-muted">{copy.hint}</p>
+      <p id="contact-form-hint" className="text-xs leading-relaxed text-ink-muted">
+        {copy.hint}
+      </p>
 
       <Button type="submit" variant="primary" className="w-full sm:w-auto">
         <Send className="size-4" aria-hidden />

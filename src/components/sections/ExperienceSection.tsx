@@ -58,6 +58,8 @@ function ExperienceCard({
           type="button"
           className="flex w-full items-start justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           aria-expanded={expanded}
+          aria-controls={`experience-panel-${entry.id}`}
+          id={`experience-trigger-${entry.id}`}
           onClick={onToggle}
         >
           <header className="min-w-0 space-y-1">
@@ -81,7 +83,12 @@ function ExperienceCard({
         </button>
 
         {expanded ? (
-          <div className="border-t border-stroke px-5 pb-5 sm:px-6 sm:pb-6">
+          <div
+            id={`experience-panel-${entry.id}`}
+            role="region"
+            aria-labelledby={`experience-trigger-${entry.id}`}
+            className="border-t border-stroke px-5 pb-5 sm:px-6 sm:pb-6"
+          >
             <p className="mt-4 text-sm leading-relaxed text-ink-muted">
               {entry.summary[locale]}
             </p>
@@ -160,22 +167,24 @@ export function ExperienceSection({ locale }: ExperienceSectionProps) {
             <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted">
               {labels.featured[locale]}
             </p>
-            <ol className="relative">
+            <div className="relative">
               <div
                 aria-hidden
                 className="absolute top-2 bottom-2 left-[0.55rem] w-px bg-gradient-to-b from-accent/50 via-stroke to-transparent md:left-[0.7rem]"
               />
-              {featured.map((entry) => (
-                <ExperienceCard
-                  key={entry.id}
-                  entry={entry}
-                  locale={locale}
-                  expanded={expanded[entry.id]}
-                  onToggle={() => toggle(entry.id)}
-                  showCurrent={Boolean(entry.isCurrent)}
-                />
-              ))}
-            </ol>
+              <ol>
+                {featured.map((entry) => (
+                  <ExperienceCard
+                    key={entry.id}
+                    entry={entry}
+                    locale={locale}
+                    expanded={expanded[entry.id]}
+                    onToggle={() => toggle(entry.id)}
+                    showCurrent={Boolean(entry.isCurrent)}
+                  />
+                ))}
+              </ol>
+            </div>
           </div>
         </Reveal>
 
@@ -184,22 +193,24 @@ export function ExperienceSection({ locale }: ExperienceSectionProps) {
             <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted">
               {labels.earlier[locale]}
             </p>
-            <ol className="relative">
+            <div className="relative">
               <div
                 aria-hidden
                 className="absolute top-2 bottom-2 left-[0.55rem] w-px bg-gradient-to-b from-stroke via-stroke to-transparent md:left-[0.7rem]"
               />
-              {earlier.map((entry) => (
-                <ExperienceCard
-                  key={entry.id}
-                  entry={entry}
-                  locale={locale}
-                  expanded={expanded[entry.id]}
-                  onToggle={() => toggle(entry.id)}
-                  showCurrent={false}
-                />
-              ))}
-            </ol>
+              <ol>
+                {earlier.map((entry) => (
+                  <ExperienceCard
+                    key={entry.id}
+                    entry={entry}
+                    locale={locale}
+                    expanded={expanded[entry.id]}
+                    onToggle={() => toggle(entry.id)}
+                    showCurrent={false}
+                  />
+                ))}
+              </ol>
+            </div>
           </div>
         </Reveal>
       </Container>

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import { useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
@@ -17,6 +18,7 @@ export function PortraitGallery({ locale }: PortraitGalleryProps) {
   const slides = profile.gallery;
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   const goTo = useCallback(
     (next: number) => {
@@ -26,10 +28,10 @@ export function PortraitGallery({ locale }: PortraitGalleryProps) {
   );
 
   useEffect(() => {
-    if (paused || slides.length < 2) return;
+    if (reduceMotion || paused || slides.length < 2) return;
     const id = window.setInterval(() => goTo(index + 1), AUTO_MS);
     return () => window.clearInterval(id);
-  }, [goTo, index, paused, slides.length]);
+  }, [goTo, index, paused, reduceMotion, slides.length]);
 
   const current = slides[index];
 
@@ -60,8 +62,11 @@ export function PortraitGallery({ locale }: PortraitGalleryProps) {
               width={720}
               height={900}
               priority={i === 0}
+              sizes="(max-width: 1024px) 22rem, 24rem"
+              quality={82}
               className={cn(
-                "absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out",
+                "absolute inset-0 h-full w-full object-cover",
+                !reduceMotion && "transition-opacity duration-700 ease-out",
                 i === index ? "opacity-100" : "opacity-0",
               )}
               style={{ objectPosition: slide.objectPosition }}
@@ -72,7 +77,10 @@ export function PortraitGallery({ locale }: PortraitGalleryProps) {
             <p className="font-display text-base font-medium text-ink">
               {profile.shortName}
             </p>
-            <p className="text-xs text-ink-muted sm:text-sm">
+            <p
+              className="text-xs text-ink-muted sm:text-sm"
+              aria-live="polite"
+            >
               {current.caption[locale]}
             </p>
           </div>

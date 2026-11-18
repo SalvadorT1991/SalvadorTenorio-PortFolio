@@ -8,7 +8,9 @@ import { HowIWorkSection } from "@/components/sections/HowIWorkSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { ProofStrip } from "@/components/sections/ProofStrip";
 import { StackSection } from "@/components/sections/StackSection";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getLocaleFromParam, isLocale } from "@/lib/i18n";
+import { siteUrl } from "@/lib/site";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -39,13 +41,15 @@ export async function generateMetadata({
       languages: {
         es: "/es",
         en: "/en",
+        "x-default": "/es",
       },
     },
     openGraph: {
       title,
       description,
       locale: locale === "es" ? "es_MX" : "en_US",
-      url: `/${locale}`,
+      alternateLocale: locale === "es" ? ["en_US"] : ["es_MX"],
+      url: `${siteUrl}/${locale}`,
       type: "website",
     },
     twitter: {
@@ -63,6 +67,7 @@ export default async function LocaleHomePage({ params }: PageProps) {
 
   return (
     <>
+      <JsonLd locale={locale} />
       <HeroFoundation locale={locale} />
       <ProofStrip locale={locale} />
       <AboutSection locale={locale} />

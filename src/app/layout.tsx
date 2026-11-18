@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Instrument_Sans, Source_Sans_3 } from "next/font/google";
+import { siteName, siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
@@ -21,12 +22,34 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#0B1220",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://salvadortenorio.dev"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Salvador Tenorio Alba | Lead Software Architect",
+    default: `${siteName} | Lead Software Architect`,
     template: "%s",
   },
+  applicationName: `${siteName} Portfolio`,
+  authors: [{ name: siteName, url: siteUrl }],
+  creator: siteName,
+  publisher: siteName,
+  category: "technology",
+  keywords: [
+    "Salvador Tenorio Alba",
+    "Lead Software Architect",
+    "Senior Full Stack Engineer",
+    ".NET",
+    "C#",
+    "enterprise software",
+    "STA Solutions",
+    "Guadalajara",
+  ],
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
@@ -36,20 +59,28 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_MX",
     alternateLocale: ["en_US"],
-    title: "Salvador Tenorio Alba | Lead Software Architect",
+    title: `${siteName} | Lead Software Architect`,
     description:
       "Enterprise software architecture, .NET engineering, and modernization — STA Solutions.",
-    siteName: "Salvador Tenorio Alba",
+    siteName,
+    url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Salvador Tenorio Alba | Lead Software Architect",
+    title: `${siteName} | Lead Software Architect`,
     description:
       "Enterprise software architecture, .NET engineering, and modernization.",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
