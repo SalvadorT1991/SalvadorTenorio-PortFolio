@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Cache/instant shell features were blocking client navigations in Next 16.
   turbopack: {
     rules: {
       "*.css": {

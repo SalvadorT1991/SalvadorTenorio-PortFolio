@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Canvas */
+  --canvas: #0b1220;
+  --canvas-deep: #070d18;
+  --surface: #121a2a;
+  --surface-elevated: #182235;
+
+  /* Ink */
+  --ink: #e8eef7;
+  --ink-muted: #94a3b8;
+  --ink-inverse: #061018;
+
+  /* Accents — steel teal / sky (less generic neon cyan) */
+  --accent: #14b8a6;
+  --accent-soft: #2dd4bf;
+  --accent-blue: #38bdf8;
+
+  /* Structure */
+  --stroke: rgba(148, 163, 184, 0.14);
+  --stroke-strong: rgba(148, 163, 184, 0.28);
+
+  /* Focus */
+  --ring: #22d3ee;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-canvas: var(--canvas);
+  --color-canvas-deep: var(--canvas-deep);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-inverse: var(--ink-inverse);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-blue: var(--accent-blue);
+  --color-stroke: var(--stroke);
+  --color-stroke-strong: var(--stroke-strong);
+
+  --font-display: var(--font-instrument-sans);
+  --font-sans: var(--font-source-sans);
+  --font-mono: var(--font-ibm-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-source-sans), system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--accent) 35%, transparent);
+    color: var(--ink);
+  }
+
+  a {
+    color: inherit;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .font-display {
+    font-family: var(--font-instrument-sans), var(--font-source-sans), system-ui,
+      sans-serif;
+  }
 }
